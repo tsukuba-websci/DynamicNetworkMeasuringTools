@@ -1,9 +1,10 @@
 name = "DynamicNetworkMeasuringTools"
 uuid = "e1e586fd-41ac-4de6-ab4c-aebf94533247"
-version = "0.0.1"
+version = "0.0.2"
 
 [deps]
 DataFrames = "a93c6f00-e57d-5684-b7b6-d8193f3e46c0"
 GLM = "38e38edf-8417-5370-95a0-9cbb8c7f171a"
 Graphs = "86223c79-3864-5bf0-83f7-82e725a168b6"
+LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
 StatsBase = "2913bbd2-ae8a-5f71-8c99-4fb6c76f3a91"

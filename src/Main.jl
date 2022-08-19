@@ -1,7 +1,7 @@
 include("./Types.jl")
 include("./Utils.jl")
 
-using DataFrames, Graphs, StatsBase, GLM
+using DataFrames, Graphs, StatsBase, GLM, LinearAlgebra
 
 function calc_gamma(history::History)
     checkpoints = collect(1:length(history))
