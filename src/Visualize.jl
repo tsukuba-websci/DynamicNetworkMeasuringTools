@@ -48,10 +48,6 @@ function plot_rich_get_richer_triangle(history::History, tau::Int=1000)
     return plot(pltdata, layout)
 end
 
-function plot_rich_get_richer_triangle(env::Environment, tau::Int=1000)
-    return plot_rich_get_richer_triangle(env.history, tau)
-end
-
 function plot_rich_get_richer_triangle_in_ratio(history::History, ratio=0.10; tau=1000)
     separators = 1:tau:length(history)
     intervals = [history[separator:min(separator + tau, end)] for separator in separators]

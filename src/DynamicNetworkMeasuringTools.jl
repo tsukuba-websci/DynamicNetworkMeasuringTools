@@ -23,5 +23,4 @@ export calc_cluster_coefficient,
     plot_heaps,
     plot_zipf,
     History
-
 end
