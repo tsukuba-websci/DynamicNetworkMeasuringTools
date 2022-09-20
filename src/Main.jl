@@ -198,7 +198,7 @@ function calc_recentness(history::History, tau=1000)
         ] .|>
         last |>
         sum
-    ) / (intervals .|> first .|> last |> sum)
+    ) / (separators |> sum)
 end
 
 """インターバル内のローカルエントロピーを計算する"""
