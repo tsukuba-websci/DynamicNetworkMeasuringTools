@@ -101,13 +101,18 @@ Youth Coefficientを算出する。
 _Monechi, B., Ruiz-Serrano, Ã., Tria, F., & Loreto, V. (2017). Waves of novelties in the expansion into the adjacent possible. PLoS ONE, 12(6), e0179303. [https://doi.org/10.1371/journal.pone.0179303](https://doi.org/10.1371/journal.pone.0179303)_
 """
 function calc_youth_coefficient(history::History, n::Int=100)
-    function mean_birthstep_in_chunk(history::History, chunk::History)
-        agent_ids = unique(vcat(collect.(chunk)...))
-        mean(map(aid -> get_birthstep(aid, history), agent_ids))
-    end
+    birthsteps = DynamicNetworkMeasuringTools.get_birthsteps(history)
 
-    chunks = makechunks(history, n)
-    empirical = map(chunk -> mean_birthstep_in_chunk(history, chunk), chunks)
+    # エージェントIDをそれぞれのbirthstepで置き換えたhistory配列
+    birth_history = collect(
+        zip(
+            getindex.(Ref(birthsteps), first.(history)),
+            getindex.(Ref(birthsteps), last.(history)),
+        ),
+    )
+    chunks = makechunks(birth_history, n)
+
+    empirical = map(chunk -> mean([first.(chunk); last.(chunk)]), chunks)
 
     data = DataFrame(; x=1:n, y=empirical)
     ols = lm(@formula(y ~ x), data)
