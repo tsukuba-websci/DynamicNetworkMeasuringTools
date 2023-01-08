@@ -48,41 +48,28 @@ function calc_connectedness(history::History; offset_start::Bool=true)
     end
 
     max_id = max_id = maximum(vcat(collect.(history)...))
-    connectedness_cum = [0, 0, 0, 0]
+    connectedness_cum = [0 0; 0 0]
     g = SimpleDiGraph(max_id)
     for (step, event) in enumerate(history)
         src, dst = event
-
         # 新しいエッジか判定
         is_new = add_edge!(g, src, dst)
 
-        # エッジの追加で三角形が形成されるか判定
-        # srcノードとdstノードに共通の隣接ノードがあれば三角形が形成される
-        is_open = isempty(common_neighbors(g, src, dst))
-
-        is_old = !is_new
-        is_close = !is_open
-
         if (step >= calc_start_step)
+            # エッジの追加で三角形が形成されるか判定
+            # srcノードとdstノードに共通の隣接ノードがあれば三角形が形成される
+            is_open = isempty(common_neighbors(g, src, dst))
 
             # 結果の保存
-            if is_new && is_close
-                connectedness_cum[1] += 1
-            elseif is_new && is_open
-                connectedness_cum[2] += 1
-            elseif is_old && is_close
-                connectedness_cum[3] += 1
-            elseif is_old && is_open
-                connectedness_cum[4] += 1
-            end
+            connectedness_cum[Int(is_new) + 1, Int(is_open) + 1] += 1
         end
     end
 
     return Dict(
-        :NC => connectedness_cum[1] / sum(connectedness_cum),
-        :NO => connectedness_cum[2] / sum(connectedness_cum),
-        :OC => connectedness_cum[3] / sum(connectedness_cum),
-        :OO => connectedness_cum[4] / sum(connectedness_cum),
+        :NC => connectedness_cum[2, 1] / sum(connectedness_cum),
+        :NO => connectedness_cum[2, 2] / sum(connectedness_cum),
+        :OC => connectedness_cum[1, 1] / sum(connectedness_cum),
+        :OO => connectedness_cum[1, 2] / sum(connectedness_cum),
     )
 end
 
