@@ -231,6 +231,7 @@ function calc_heaps(history::History)
 
     if length(history > 11000)
         history = history[10000:end]
+    end
  
     for (index, (src, dst)) in enumerate(history)
         push!(set, src, dst)
@@ -255,6 +256,7 @@ function calc_heaps_two(history: Hisotry)
 
     if length(history > 11000)
         history = history[10000:end]
+    end
 
     for (index, pair) in enumerate(history)
         push!(set, pair)
@@ -278,6 +280,7 @@ function calc_heaps_three(history: History)
 
     if length(history > 11000)
         history = history[10000:end]
+    end
 
     pair_of_pairs = [(history[i], history[i+1]) for i in 1:length(history)-1]
 
