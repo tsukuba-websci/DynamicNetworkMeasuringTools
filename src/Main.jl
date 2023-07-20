@@ -248,7 +248,7 @@ function calc_heaps(history::History)
     coef(ols)[2], (x=x, y=y, predicted=10 .^ predict(ols))
 end
 
-function calc_heaps_two(history: Hisotry)
+function calc_heaps_two(history::History)
     steps = Int[]
     upairs = Int[]
     set = Set{(Int, Int)}()
@@ -273,7 +273,7 @@ function calc_heaps_two(history: Hisotry)
     coef(ols)[2], (x=x, y=y, predicted=10 .^ predict(ols))
 end
 
-function calc_heaps_three(history: History)
+function calc_heaps_three(history::History)
     steps = []
     ugroups = Int[]
     set = Set{((Int, Int),(Int, Int))}()
