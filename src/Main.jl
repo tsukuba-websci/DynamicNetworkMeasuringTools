@@ -229,6 +229,9 @@ function calc_heaps(history::History)
     uagents = Int[]
     set = Set{Int}()
 
+    if length(history > 11000)
+        history = history[10000:end]
+ 
     for (index, (src, dst)) in enumerate(history)
         push!(set, src, dst)
         push!(steps, index)
@@ -242,6 +245,55 @@ function calc_heaps(history::History)
     ols = lm(@formula(Y ~ X), data)
 
     coef(ols)[2], (x=x, y=y, predicted=10 .^ predict(ols))
+end
+
+function calc_heaps_two(history: Hisotry)
+    steps = Int[]
+    upairs = Int[]
+    set = Set{(Int, Int)}()
+
+
+    if length(history > 11000)
+        history = history[10000:end]
+
+    for (index, pair) in enumerate(history)
+        push!(set, pair)
+        push!(steps, index)
+        push!(upairs, length(set))
+    end
+
+    x = steps
+    y = upairs
+
+    data = DataFrame(; X=log10.(x), Y=log10.(y))
+    ols = lm(@formula(Y ~ X), data)
+
+    coef(ols)[2], (x=x, y=y, predicted=10 .^ predict(ols))
+end
+
+function calc_heaps_three(history: History)
+    steps = []
+    ugroups = Int[]
+    set = Set{((Int, Int),(Int, Int))}()
+
+    if length(history > 11000)
+        history = history[10000:end]
+
+    pair_of_pairs = [(history[i], history[i+1]) for i in 1:length(history)-1]
+
+    for (index, group) in enumerate(pair_of_pairs)
+        push!(set, group)
+        push!(steps, index)
+        push!(ugroups, length(set))
+    end
+
+    x = steps
+    y = ugroups
+
+    data = DataFrame(; X=log10.(x), Y=log10.(y))
+    ols = lm(@formula(Y ~ X), data)
+
+    coef(ols)[2], (x=x, y=y, predicted=10 .^ predict(ols))   
 end
 
 function calc_zipf(history::History)
