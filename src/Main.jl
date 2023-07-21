@@ -229,7 +229,7 @@ function calc_heaps(history::History)
     uagents = Int[]
     set = Set{Int}()
 
-    if length(history > 11000)
+    if length(history) > 11000
         history = history[10000:end]
     end
  
@@ -254,7 +254,7 @@ function calc_heaps_two(history::History)
     set = Set{(Int, Int)}()
 
 
-    if length(history > 11000)
+    if length(history) > 11000
         history = history[10000:end]
     end
 
@@ -278,7 +278,7 @@ function calc_heaps_three(history::History)
     ugroups = Int[]
     set = Set{((Int, Int),(Int, Int))}()
 
-    if length(history > 11000)
+    if length(history) > 11000
         history = history[10000:end]
     end
 
