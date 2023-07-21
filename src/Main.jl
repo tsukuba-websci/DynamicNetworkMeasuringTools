@@ -275,7 +275,7 @@ end
 function calc_heaps_three(history::History)
     steps = []
     ugroups = Int[]
-    set = Set{((Int, Int),(Int, Int))}()
+    set = Set()
 
     if length(history) > 11000
         history = history[10000:end]
