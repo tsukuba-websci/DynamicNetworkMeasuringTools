@@ -251,8 +251,7 @@ end
 function calc_heaps_two(history::History)
     steps = Int[]
     upairs = Int[]
-    set = Set{(Int, Int)}()
-
+    set = Set()
 
     if length(history) > 11000
         history = history[10000:end]
